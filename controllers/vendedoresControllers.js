@@ -105,8 +105,52 @@ class VendedoresController{
         }
     }
 
-    actualizarVendedor(req,res){
-        res.send({msg:'desde aqui se actualiza los datos de los vendedores'})
+    async actualizarVendedor(req,res){
+
+        try{
+
+            const {id} = req.params
+            const {id_usuario,nombre_tienda,descripcion,estado} = req.body
+
+            if(!id_usuario || !nombre_tienda || !descripcion || !estado){
+                return res.status(400).jsonson({msg:'los nuevos vendedores deben de tener id_usuario,nombre_tienda,descripcion,estado'})
+            }
+
+
+            if (!id){
+                return res.status(400).json({
+                    msg:'Falta el ID del usuario a actualizar'
+                })
+            }
+
+            const {data,error} = await supabase
+                .from('vendedores')
+                .update({id_usuario,nombre_tienda,descripcion,estado})
+                .eq('id_vendedor',id)
+                .select()
+            
+            if (error) throw error
+
+            if (data.length === 0 ){
+                return res.status(404).json({msg:'vendedor no encontrado'})
+            }
+
+            res.json({
+                msg:'usuario actualizado correctamente',
+                usuario: data
+            })
+
+
+
+        }catch(err){
+
+            res.status(500).json({
+                msg:'error al actualizar dato',
+                error: err.message
+            })
+
+        }
+        
 
     }
 
