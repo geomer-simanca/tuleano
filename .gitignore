@@ -1,0 +1,27 @@
+# 🧠 Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# 🔑 Variables de entorno
+.env
+
+# 🚀 Archivos del sistema o editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# 🧰 Archivos temporales y logs
+*.log
+*.tmp
+*.temp
+
+# 🧪 Testing y coverage
+coverage/
+jest-cache/
+jest-report/
+
+# 📄 Archivos locales o de pruebas
+index.http
+test.js
