@@ -117,8 +117,54 @@ class UsuariosController{
 
     }
 
-    actualizar(req,res){
-        res.send({msg:'Actualizacion de un usuario'})
+    async actualizar(req,res){
+
+        try{
+
+            const {id} = req.params
+            const {nombre , email , clave , telefono , direccion , es_vendedor} = req.body
+
+
+            if (!id){
+                return res.status(400).json({
+                    msg:'Falta el ID del usuario a actualizar'
+                })
+            }
+
+            if (!nombre || !email || !clave || !telefono || !direccion || es_vendedor === undefined){
+                return res.status(400).json({msg:'la peticion debe tener nombre , email , clave , telefono , direccion , es_vendedor '})
+            }
+
+            const {data,error} = await supabase
+                .from('usuarios')
+                .update({nombre , email , clave , telefono , direccion , es_vendedor})
+                .eq('id_usuario',id)
+                .select()
+            
+            if (error) throw error
+
+            if (data.length === 0 ){
+                return res.status(404).json({msg:'usuario no encontrado'})
+            }
+
+            res.json({
+                msg:'usuario actualizado correctamente',
+                usuario: data
+            })
+
+
+
+
+
+        }catch(err){
+
+            res.status(500).json({
+                msg:'error al actualizar dato',
+                error: err.message
+            })
+
+        }
+        
     }
 
     borrar(req,res){

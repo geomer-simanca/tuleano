@@ -1,8 +1,12 @@
 # 🧠 Node.js dependencies
+# Node.js
 node_modules/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
+.env
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 
 # 🔑 Variables de entorno
 .env
