@@ -154,9 +154,31 @@ class VendedoresController{
 
     }
 
-    eliminarVendedor(req,res){
-        const  {id}  = req.params
-        res.send({msg:`se desea eliminar al vendedor ${id}`})
+    async eliminarVendedor(req,res){
+        try{
+
+            const {id} = req.params
+
+            if (!id){
+                return res.status(400).json({msg:'debe de agregar un id para eliminar un valor'})
+            }
+
+            const {error} = await supabase
+                .from('vendedores')
+                .delete()
+                .eq('id_vendedor',id)
+            
+            if (error) throw error
+
+            res.status(200).json({msg:`el vendedor ${id} se elimino correctamente`})
+
+        }catch(err){
+            res.status(500).json({
+                msg:`error al eliminar el vendedor ${req.params.id}`,
+                error:err.message
+            })
+
+        }
 
     }
 

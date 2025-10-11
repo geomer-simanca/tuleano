@@ -167,8 +167,33 @@ class UsuariosController{
         
     }
 
-    borrar(req,res){
-        res.send({msg:'Eliminacion de usuario'})
+    async borrar(req,res){
+
+        try{
+
+            const {id} = req.params
+
+            if (!id){
+                return res.status(400).json({msg:'debe de agregar un id para eliminar un valor'})
+            }
+
+            const {error} = await supabase
+                .from('usuarios')
+                .delete()
+                .eq('id_usuario',id)
+            
+            if (error) throw error
+
+            res.status(200).json({msg:`el usuario ${id} se elimino correctamente`})
+
+        }catch(err){
+            res.status(500).json({
+                msg:`error al eliminar el usuario ${req.params.id}`,
+                error:err.message
+            })
+
+        }
+        
 
     }
 
