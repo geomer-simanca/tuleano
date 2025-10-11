@@ -2,19 +2,19 @@ const express = require('express')
 const router = express.Router()
 const supabase = require('../database/conexion.js')
 const vendedorescontrollers = require('../controllers/vendedoresControllers.js')
-
+const verificarClave = require('../middlewares/autenticacion.js')
 
 router.get('/',vendedorescontrollers.consultarVendedores)
 
 
-router.post('/',vendedorescontrollers.agregarVendedor)
+router.post('/',verificarClave,vendedorescontrollers.agregarVendedor)
 
 router.route('/:id')
     .get(vendedorescontrollers.consultarVendedor)
 
-    .put(vendedorescontrollers.actualizarVendedor)
+    .put(verificarClave,vendedorescontrollers.actualizarVendedor)
 
-    .delete(vendedorescontrollers.eliminarVendedor)
+    .delete(verificarClave,vendedorescontrollers.eliminarVendedor)
 
 
 
