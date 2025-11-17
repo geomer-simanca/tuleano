@@ -1,11 +1,16 @@
 require('dotenv').config()
 
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const usuariosRouters = require('./routers/usuariosRouters.js')
 const venderoresRouters = require('./routers/vendedoresRouters.js')
 const productosRouters = require('./routers/productosRouters.js')
 const carritoRuter = require('./routers/carritoRouters.js')
+
+// Habilita CORS para todos
+app.use(cors());
+
 app.use(express.json())
 
 
