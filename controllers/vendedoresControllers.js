@@ -71,7 +71,7 @@ class VendedoresController{
             const {id_usuario,nombre_tienda,descripcion,estado} = req.body
 
             if(!id_usuario || !nombre_tienda || !descripcion || !estado){
-                return res.status(400).jsonson({msg:'los nuevos usuarios deben de tener id_usuario,nombre_tienda,descripcion,estado'})
+                return res.status(400).json({msg:'los nuevos usuarios deben de tener id_usuario,nombre_tienda,descripcion,estado'})
             }
 
 
